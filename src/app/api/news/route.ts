@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { handleError } from "@/exceptions";
-import { getRandomNews } from "@/lib/news/newsScraper";
+import { getAllNews, getRandomNews } from "@/lib/news/newsScraper";
 import { ServerException } from "@/exceptions/server";
 import { makeSuccessResponse } from "@/lib/utils";
 
@@ -8,7 +8,7 @@ export const runtime = "edge";
 
 export async function GET(request: Request) {
   try {
-    const articles = await getRandomNews();
+    const articles = await getAllNews();
     if (articles.length === 0) {
       const error = new ServerException("No articles found, please try again.");
       return handleError(error);
